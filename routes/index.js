@@ -8,8 +8,8 @@ router.get("/", forwardAuthenticated, (req, res) =>
 );
 
 // Dashboard
-router.get("/dashboard", ensureAuthenticated, (req, res) =>
-  res.render("dashboard", {
+router.get("/products", ensureAuthenticated, (req, res) =>
+  res.render("products", {
     user: req.user,
     layout: "layouts/layout"
   })
