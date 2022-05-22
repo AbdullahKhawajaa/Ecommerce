@@ -11,24 +11,26 @@ const { forwardAuthenticated } = require('../config/auth');
 
 //storing multer
 const storage = multer.diskStorage({
-    destination:function (request, file, callback){
-      callback(null, './uploads/images')
-    },
-  
-    filename:function(request, file, callback){
-      callback(null, file.fieldname + '-' + Date.now());
-    }
-  })
-  //upload multers
-  const upload = multer({
-    storage:storage
-  })
+        destination: function(request, file, callback) {
+            callback(null, './uploads/images')
+        },
+
+        filename: function(request, file, callback) {
+            callback(null, file.fieldname + '-' + Date.now());
+        }
+    })
+    //upload multers
+const upload = multer({
+    storage: storage
+})
 
 //Register Routes
 // Login Page
 router.get('/login', forwardAuthenticated, userController.login);
 // Register Page
 router.get('/register', forwardAuthenticated, userController.register);
+
+router.get('/reset-password', forwardAuthenticated, userController.reset);
 
 // Register
 router.post('/register', userController.registerUser);
@@ -40,6 +42,12 @@ router.post('/login', userController.loginUser);
 router.get('/logout', userController.logout);
 
 // admin add product
-router.post('/listProducts',upload.single('image') ,userController.listProduct);
+router.post('/listProducts', upload.single('image'), userController.listProduct);
+
+// verify email
+router.get('/verify-login', userController.verifyLogin)
+
+//reset password
+router.post('/reset-password', userController.resetPassword)
 
 module.exports = router;
