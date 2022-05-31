@@ -65,14 +65,14 @@ router.get("/cart", ensureAuthenticated, (req, res) =>
 
 
 
-router.get("/adminwelcome", ensureAuthenticated, (req, res) =>
+router.get("/admin", ensureAuthenticated, (req, res) =>
     res.render("adminwelcome", {
         user: req.user,
         layout: "layouts/layout"
     })
 );
 
-router.get("/adminaddproduct", ensureAuthenticated, (req, res) =>
+router.get("/listproduct", ensureAuthenticated, (req, res) =>
     res.render("adminAddProduct", {
         user: req.user,
         layout: "layouts/layout"
