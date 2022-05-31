@@ -50,4 +50,10 @@ router.get('/verify-login', userController.verifyLogin)
 //reset password
 router.post('/reset-password', userController.resetPassword)
 
+//Update Product
+
+router.get("/update/:id", userController.update);
+router.post("/update/:id", userController.updateStudent);
+router.get("/delete/:id", userController.delete);
+
 module.exports = router;

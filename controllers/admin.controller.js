@@ -50,6 +50,28 @@ exports.listProduct = (req, res) => {
       return res.status(400).json({
         err: `Oops something went wrong! Cannont delete student with ${req.params.id}.`
       });
-    req.flash("student_del_success_msg", "Student has been deleted successfully");
-    res.redirect("/student/all");
+    req.flash("product_del_success_msg", "Student has been deleted successfully");
+    res.redirect("adminManageProduct");
   };
+
+  exports.updateStudent = async (req, res) => {
+    let result = await product.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
+    if (!result)
+      return res.status(400).json({
+        err: `Oops something went wrong! Cannont update product with ${req.params.id}.`
+      });
+    req.flash("product_update_success_msg", "Product updated successfully");
+    res.redirect("adminManageProduct");
+  };
+
+  exports.update = async function(req, res) {
+    let products = await product.findOne({ _id: req.params.id });
+    res.render("adminUpdate", {
+      products,
+      layout: "layouts/studentLayout"
+    });
+  };
+  

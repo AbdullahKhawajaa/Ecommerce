@@ -268,3 +268,35 @@ exports.listProduct = (req, res) => {
         });
     }
 };
+
+exports.updateStudent = async (req, res) => {
+    let result = await product.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
+    if (!result)
+      return res.status(400).json({
+        err: `Oops something went wrong! Cannont update product with ${req.params.id}.`
+      });
+    console.log("Product updated");
+    //req.flash("product_update_success_msg", "Product updated successfully");
+    res.redirect("/adminManageProduct");
+  };
+
+  exports.update = async function(req, res) {
+    let products = await product.findOne({ _id: req.params.id });
+    res.render("adminUpdate", {
+      products,
+      layout: "layouts/studentLayout"
+    });
+  };
+
+  exports.delete = async (req, res) => {
+    let result = await product.deleteOne({ _id: req.params.id });
+    if (!result)
+      return res.status(400).json({
+        err: `Oops something went wrong! Cannont delete product with ${req.params.id}.`
+      });
+    //req.flash("student_del_success_msg", "Student has been deleted successfully");
+    res.redirect("/adminManageProduct");
+  };

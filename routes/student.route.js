@@ -10,7 +10,7 @@ router.post("/add", student_controller.create);
 
 router.get("/all", student_controller.all);
 router.get("/:id", student_controller.details);
-router.get("/update/:id", student_controller.update);
+router.get("/update", student_controller.update);
 router.post("/update/:id", student_controller.updateStudent);
 router.get("/delete/:id", student_controller.delete);
 

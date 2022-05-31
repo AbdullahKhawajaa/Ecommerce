@@ -43,8 +43,8 @@
           <td style="width: 300px;"><img src="data:image/<%= product.image.contentType%>;base64,<%= product.image.data.toString('base64')%>"
              alt="<%- product.name %>" style="width:250px;height:100px;"></td>
           <td class="Action">
-               <a href="/adminUpdate/<%- product._id %>" style="background-color: orange;">Update</a>
-               <a href="/listproduct" style="background-color: red">Delete</a>
+               <a href="/users/update/<%=product._id%>" style="background-color: orange;">Update</a>
+               <a href="/users/delete/<%=product._id%>" style="background-color: red">Delete</a>
           </td>
         </tr>
         <% }); %>
