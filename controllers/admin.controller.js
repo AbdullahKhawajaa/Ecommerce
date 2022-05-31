@@ -1,4 +1,6 @@
 const product = require("../models/listproduct");
+const pdf = require("html-pdf");
+const fs = require("fs");
 
 exports.listProduct = (req, res) => {
     const { productName, productCategory, productDescription, productPrice, productQuantity } = req.body;
@@ -40,4 +42,14 @@ exports.listProduct = (req, res) => {
         }
       });
     }
+  };
+
+  exports.delete = async (req, res) => {
+    let result = await product.deleteOne({ _id: req.params.id });
+    if (!result)
+      return res.status(400).json({
+        err: `Oops something went wrong! Cannont delete student with ${req.params.id}.`
+      });
+    req.flash("student_del_success_msg", "Student has been deleted successfully");
+    res.redirect("/student/all");
   };

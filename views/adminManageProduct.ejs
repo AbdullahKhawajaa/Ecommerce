@@ -23,7 +23,7 @@
       </div>
       
     </div>
-    
+
     <table class="table table-striped table-hover table-bordered">
       <thead>
         <tr>
@@ -42,8 +42,9 @@
           <td><%- product.price%></td>
           <td style="width: 300px;"><img src="data:image/<%= product.image.contentType%>;base64,<%= product.image.data.toString('base64')%>"
              alt="<%- product.name %>" style="width:250px;height:100px;"></td>
-          <td>
-               
+          <td class="Action">
+               <a href="/adminUpdate/<%- product._id %>" style="background-color: orange;">Update</a>
+               <a href="/listproduct" style="background-color: red">Delete</a>
           </td>
         </tr>
         <% }); %>
@@ -69,3 +70,19 @@
     </div>
   </div>
 </div>
+
+<style>
+  .Action a {
+  margin-left: 10%;
+  font-size: 16px;
+  transition: ease-in all 0.5s;
+  color: #fff;
+  padding: 10px 0px;
+  max-width: 250px;
+  border-radius: 10px;
+  width: 250px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+</style>

@@ -1,0 +1,82 @@
+<body style="background-color: white;background-color: white;background-image: url(https://thebusinessofesports.com/wp-content/uploads/2021/12/Screen-Shot-2019-10-18-at-10.42.18-PM.jpg);">
+    <div class="row mt-5">
+      <div class="col-md-4 m-auto">
+        <div class="card card-body" style="background-color: white;">
+            <img src="https://static.vecteezy.com/system/resources/previews/002/976/607/large_2x/project-manager-and-admin-vector.jpg" width="50%" style="float: none; margin-left: 25%;"> 
+            <h1 class="text-center mb-3" style="color: steelblue;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 40px";> Update Product </h1>
+          <% include ./partials/messages %>
+          <form action="/users/listProducts" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="name">Product Name</label>
+              <input
+                type="name"
+                id="name"
+                name="name"
+                class="form-control"
+                placeholder="Enter Product Name"
+                value="<%= typeof name != 'undefined' ? name : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="category">Product Category</label>
+              <input
+                type="text"
+                id="category"
+                name="category"
+                class="form-control"
+                placeholder="Enter Category"
+                value="<%= typeof category != 'undefined' ? category : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="description">Product Description</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                class="form-control"
+                placeholder="Enter Description"
+                value="<%= typeof description != 'undefined' ? description : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input
+                type="text"
+                id="price"
+                name="price"
+                class="form-control"
+                placeholder="Enter Price"
+                value="<%= typeof price != 'undefined' ? price : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input
+                type="quantity"
+                id="quantity"
+                name="quantity"
+                class="form-control"
+                placeholder="Enter Quantity"
+                value="<%= typeof quantity != 'undefined' ? quantity : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="image">Quantity</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                class="form-control"
+                placeholder="Select Picture"
+                value="<%= typeof file != 'undefined' ? file : '' %>"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </body>

@@ -103,5 +103,12 @@ router.get("/adminManageProduct", ensureAuthenticated, (req, res) =>
     }
 );
 
+router.get("/adminUpdate", ensureAuthenticated, (req, res) =>
+    res.render("adminUpdate", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
+
 
 module.exports = router;
