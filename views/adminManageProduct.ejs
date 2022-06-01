@@ -50,28 +50,71 @@
         <% }); %>
       </tbody>
     </table>
-    <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled">
-          <a href="#"><i class="fa fa-angle-double-left"></i></a>
-        </li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item">
-          <a href="#" class="page-link"
-            ><i class="fa fa-angle-double-right"></i
-          ></a>
-        </li>
-      </ul>
+    <div class="center">
+      <% if (pages > 0) { %>
+        <div class="center"></div>
+        <div class="pagination">
+        <% if(current == 1) { %>
+        <a class="disabled">&laquo;</a>
+        <% } else { %>
+        <a href="/adminManageProduct/1">&laquo;</a>
+        <% } %>
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1) { %>
+          <li class="disabled"></li>
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+          <% if (i == current) { %>
+            <a class="active"><%= i %></a>
+          <% } else { %>
+            <a href="/adminManageProduct/<%= i %>"><%= i %></a>
+          <% } %>
+          <% if (i == Number(current) + 4 && i < pages) { %>
+            <li class="disabled"></li>
+          <% } %>
+        <% } %>
+        <% if (current == pages) { %>
+          <li class="disabled"></li>
+        <% } else { %>
+          <a href="/adminManageProduct/<%= pages %>">&raquo;</a>
+        <% } %>
+        </div>
+      </div>
+      <% } %>
     </div>
   </div>
 </div>
 
 <style>
+ /*Pagination*/
+ .center {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: yellow;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination a.active {
+  background-color: yellow;
+  color: black;
+  border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+  /*----------------------------*/
+
+
   .Action a {
   margin-left: 10%;
   font-size: 16px;

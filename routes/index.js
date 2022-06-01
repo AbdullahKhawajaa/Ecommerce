@@ -37,6 +37,30 @@ router.get("/dashboard/:page", ensureAuthenticated, async (req, res, next) => {
 
 });
 
+router.get("/adminManageProduct/:page", ensureAuthenticated, (req, res) =>{
+    var perPage = 5;
+    var page = req.params.page || 1;
+    product.find({})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, products) {
+        product.count().exec(function(err, count){
+        if (err) {
+            console.log(err);
+            res.status(500).send('An error occurred', err);
+        } else {
+            res.render("adminManageProduct", {
+                user: req.user,
+                layout: "layouts/layout",
+                data: products,
+                current: page,
+                pages: Math.ceil(count / perPage) 
+            })
+        }
+       })
+    });
+});
+
 router.get("/products", ensureAuthenticated, (req, res) =>
     res.render("products", {
         user: req.user,
@@ -96,22 +120,7 @@ router.get("/adminPayment", ensureAuthenticated, (req, res) =>
     })
 );
 
-router.get("/adminManageProduct", ensureAuthenticated, (req, res) =>
-    {
-        product.find({}, function(err, product) {
-            if (err) {
-                console.log(err);
-                res.status(500).send('An error occurred', err);
-            } else {
-                res.render("adminManageProduct", {
-                    user: req.user,
-                    layout: "layouts/layout",
-                    data: product,
-                })
-            }
-        });
-    }
-);
+
 
 router.get("/adminUpdate", ensureAuthenticated, (req, res) =>
     res.render("adminUpdate", {
