@@ -53,7 +53,7 @@ router.post('/reset-password', userController.resetPassword)
 //Update Product
 
 router.get("/update/:id", userController.update);
-router.post("/updates/:id", upload.single('image'), userController.updateStudent);
+router.post("/updates/:id", upload.single('image'), userController.updateProduct);
 router.get("/delete/:id", userController.delete);
 
 module.exports = router;

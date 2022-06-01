@@ -188,22 +188,22 @@ exports.logout = (req, res) => {
 };
 
 
-//storage for multer
-const storage = multer.diskStorage({
-    destination: function(request, file, callback) {
-        callback(null, './uploads/images')
-    },
+// storage for multer
+// const storage = multer.diskStorage({
+//     destination: function(request, file, callback) {
+//         callback(null, './uploads/images')
+//     },
 
-    filename: function(request, file, callback) {
-        callback(null, Date.now() + file.originalname);
-    }
-})
+//     filename: function(request, file, callback) {
+//         callback(null, Date.now() + file.originalname);
+//     }
+// })
 
-//upload multers
+// upload multers
 
-var upload = multer({
-    storage: storage
-})
+// var upload = multer({
+//     storage: storage
+// })
 
 
 
@@ -253,15 +253,15 @@ exports.listProduct = (req, res) => {
                 });
                 newProduct.save()
                     .then((result) => {
-                        res.send(result);
+                        //res.send(result);
                         console.log("Product added in DB")
                             // req.flash("success_msg", "Product Added");
-                        res.render("adminAddProduct");
+                        res.redirect("/adminManageProduct");
                     })
                     .catch((err) => {
                         console.log(err);
                     });
-                res.render("adminAddProduct");
+                res.redirect("/adminManageProduct");
                 console.log("Product added in DB")
                     // req.flash("success_msg", "Product Added");
             }
@@ -269,60 +269,32 @@ exports.listProduct = (req, res) => {
     }
 };
 
-exports.updateStudent = async (req, res) => {
-    let result = await product.deleteOne({ _id: req.params.id });
-    if (!result)
-      return res.status(400).json({
-        err: `Oops something went wrong! Cannont delete product with ${req.params.id}.`
-      });
-    
-      console.log("Inside list products")
-      const { name, category, description, price, quantity } = req.body;
-      var img = fs.readFileSync(req.file.path);
-      var encode_img = img.toString('base64');
-      var image = {
-          data: new Buffer(encode_img, 'base64'),
-          contentType: req.file.mimetype,
-      };
-       
-        product.findOne({ name: name }).then(user => {
-        console.log("In find one condition")
-        if (user) {
-            errors.push({ msg: "Product already exists" });
-            res.render("adminAddProduct", {
-                errors,
-                name,
-                category,
-                description,
-                price,
-                quantity,
-                image
-            });
-        }
-        else {
-            const newProduct = new product({
-            name,
-            category,
-            description,
-            price,
-            quantity,
-            image,
-            });
-            newProduct.save()
-                .then((result) => {
-                    res.send(result);
-                    console.log("Product added in DB")
-                    // req.flash("success_msg", "Product Added");
-                    res.render("adminAddProduct");
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-                res.render("adminAddProduct");
-                console.log("Product added in DB")
-                // req.flash("success_msg", "Product Added");
-        }
-        });      
+exports.updateProduct = async (req, res) => {
+    const { name, category, description, price, quantity } = req.body;
+    var img = fs.readFileSync(req.file.path);
+    var encode_img = img.toString('base64');
+    var image = {
+        data: new Buffer(encode_img, 'base64'),
+        contentType: req.file.mimetype,
+    };
+    let result = await product.updateOne(
+    {
+        _id:req.params.id
+    },
+    {
+        name,
+        category,
+        description,
+        price,
+        quantity,
+        image,
+    });
+      if (!result)
+        return res.status(400).json({
+          err: `Oops something went wrong! Cannont update product with ${req.params.id}.`
+        });
+      req.flash("product_update_success_msg", "Product updated successfully");
+      res.redirect("/adminManageProduct"); 
 };
 
   exports.update = async function(req, res) {
