@@ -270,18 +270,60 @@ exports.listProduct = (req, res) => {
 };
 
 exports.updateStudent = async (req, res) => {
-    let result = await product.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
-    );
+    let result = await product.deleteOne({ _id: req.params.id });
     if (!result)
       return res.status(400).json({
-        err: `Oops something went wrong! Cannont update product with ${req.params.id}.`
+        err: `Oops something went wrong! Cannont delete product with ${req.params.id}.`
       });
-    console.log("Product updated");
-    //req.flash("product_update_success_msg", "Product updated successfully");
-    res.redirect("/adminManageProduct");
-  };
+    
+      console.log("Inside list products")
+      const { name, category, description, price, quantity } = req.body;
+      var img = fs.readFileSync(req.file.path);
+      var encode_img = img.toString('base64');
+      var image = {
+          data: new Buffer(encode_img, 'base64'),
+          contentType: req.file.mimetype,
+      };
+       
+        product.findOne({ name: name }).then(user => {
+        console.log("In find one condition")
+        if (user) {
+            errors.push({ msg: "Product already exists" });
+            res.render("adminAddProduct", {
+                errors,
+                name,
+                category,
+                description,
+                price,
+                quantity,
+                image
+            });
+        }
+        else {
+            const newProduct = new product({
+            name,
+            category,
+            description,
+            price,
+            quantity,
+            image,
+            });
+            newProduct.save()
+                .then((result) => {
+                    res.send(result);
+                    console.log("Product added in DB")
+                    // req.flash("success_msg", "Product Added");
+                    res.render("adminAddProduct");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+                res.render("adminAddProduct");
+                console.log("Product added in DB")
+                // req.flash("success_msg", "Product Added");
+        }
+        });      
+};
 
   exports.update = async function(req, res) {
     let products = await product.findOne({ _id: req.params.id });
