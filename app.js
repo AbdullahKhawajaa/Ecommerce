@@ -49,10 +49,10 @@ app.use(flash());
 app.use(function(req, res, next) {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
-  res.locals.student_add_success_msg = req.flash("student_add_success_msg");
-  res.locals.student_del_success_msg = req.flash("student_del_success_msg");
+  res.locals.student_add_success_msg = req.flash("product_add_success_msg");
+  res.locals.student_del_success_msg = req.flash("product_del_success_msg");
   res.locals.student_update_success_msg = req.flash(
-    "student_update_success_msg"
+    "product_update_success_msg"
   );
   res.locals.error = req.flash("error");
   next();
@@ -62,7 +62,7 @@ app.use(function(req, res, next) {
 app.use("/", require("./routes/index.js"));
 app.use("/users", require("./routes/users.js"));
 app.use("/student", require("./routes/student.route.js"));
-//app.use("/admin", require("./routes/admin.js"));
+app.use("/admin", require("./routes/admin.js"));
 
 const PORT = process.env.PORT || 3021;
 

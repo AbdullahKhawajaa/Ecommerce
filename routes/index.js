@@ -11,8 +11,15 @@ router.get("/", forwardAuthenticated, (req, res) =>
 
 // Dashboard
 
-router.get("/dashboard", ensureAuthenticated, (req, res) => {
-    product.find({}, function(err, image) {
+router.get("/dashboard/:page", ensureAuthenticated, async (req, res, next) => {
+    var perPage = 3;
+    var page = req.params.page || 1;
+
+    product.find({})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, image) {
+        product.count().exec(function(err, count){
         if (err) {
             console.log(err);
             res.status(500).send('An error occurred', err);
@@ -21,8 +28,11 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
                 user: req.user,
                 layout: "layouts/layout",
                 data: image,
+                current: page,
+                pages: Math.ceil(count / perPage) 
             })
         }
+       })
     });
 
 });

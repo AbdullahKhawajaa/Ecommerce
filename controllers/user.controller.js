@@ -171,7 +171,7 @@ exports.loginUser = (req, res, next) => {
     const user = User.findOne({ isVarified: true })
     if (user) {
         passport.authenticate("local", {
-            successRedirect: "/dashboard",
+            successRedirect: "/dashboard/1",
             failureRedirect: "/users/login",
             failureFlash: true
         })(req, res, next);
@@ -314,3 +314,5 @@ exports.updateProduct = async (req, res) => {
     //req.flash("student_del_success_msg", "Student has been deleted successfully");
     res.redirect("/adminManageProduct");
   };
+
+  
