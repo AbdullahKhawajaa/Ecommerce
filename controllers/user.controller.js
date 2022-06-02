@@ -1,9 +1,11 @@
 const bcrypt = require("bcryptjs");
+const pdf = require("html-pdf");
 const passport = require("passport");
 const crypto = require("crypto")
 var multer = require('multer');
 var fs = require('fs');
 var nodemailer = require('nodemailer');
+const options = { format: "A4" };
 
 // Load User model
 const User = require("../models/User");
@@ -313,6 +315,35 @@ exports.updateProduct = async (req, res) => {
       });
     //req.flash("student_del_success_msg", "Student has been deleted successfully");
     res.redirect("/adminManageProduct");
+  };
+
+  exports.allReport = (req, res) => {
+    product.find(function(err, products) {
+      if (err) {
+        return res
+          .status(400)
+          .json({ err: "Oops something went wrong! Cannont find students." });
+      }
+      res.status(200).render(
+        "reports/student/allStudent",
+        {
+          products,
+          layout: "layouts/layout"
+        },
+        function(err, html) {
+          pdf
+            .create(html, options)
+            .toFile("uploads/allStudents.pdf", function(err, result) {
+              if (err) return console.log(err);
+              else {
+                var datafile = fs.readFileSync("uploads/allStudents.pdf");
+                res.header("content-type", "application/pdf");
+                res.send(datafile);
+              }
+            });
+        }
+      );
+    });
   };
 
   

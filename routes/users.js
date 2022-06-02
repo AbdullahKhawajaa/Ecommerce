@@ -56,4 +56,8 @@ router.get("/update/:id", userController.update);
 router.post("/updates/:id", upload.single('image'), userController.updateProduct);
 router.get("/delete/:id", userController.delete);
 
+//Create Reports
+
+router.get("/report/all", userController.allReport);
+
 module.exports = router;

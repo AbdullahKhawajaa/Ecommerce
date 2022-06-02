@@ -9,6 +9,7 @@ router.get("/", forwardAuthenticated, (req, res) =>
     res.render("welcome", { layout: "layouts/layout" })
 );
 
+
 // Dashboard
 
 router.get("/dashboard/:page", ensureAuthenticated, async (req, res, next) => {
