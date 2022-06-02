@@ -8,6 +8,7 @@ var nodemailer = require('nodemailer');
 // Load User model
 const User = require("../models/User");
 const product = require("../models/listproduct");
+const profile=require("../models/editprofile");
 
 //Login Function
 exports.login = (req, res) =>
@@ -314,5 +315,48 @@ exports.updateProduct = async (req, res) => {
     //req.flash("student_del_success_msg", "Student has been deleted successfully");
     res.redirect("/adminManageProduct");
   };
-
+//Profile
+  exports.editprofile = (req, res) => {
+    console.log("Inside edit profile")
+    const { fname, lname, address, country, city, email } = req.body;
+    var img = fs.readFileSync(req.file.path);
+    var encode_img = img.toString('base64');
+    var image = {
+        data: new Buffer(encode_img, 'base64'),
+        contentType: req.file.mimetype,
+    };
+    let errors = [];
+    if (errors.length > 0) {
+        res.render("dasboard", {
+            fname, lname, address, country, city, email,image
+        });
+    } else {
+        profile.findOne({ email: email }).then(user => {
+            console.log("In find one condition")
+            if (user) {
+                errors.push({ msg: "Profile already exists !" });
+                res.render("dashboard", {
+                    fname, lname, address, country, city, email,image
+                });
+            } else {
+                const newProfile = new profile({
+                    fname, lname, address, country, city, email,image
+                });
+                newProfile.save()
+                    .then((result) => {
+                        //res.send(result);
+                        console.log("Profile added in DB")
+                            // req.flash("success_msg", "Product Added");
+                        res.redirect("/dasboard/1");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                res.redirect("/dashboard/1");
+                console.log("Profile added in DB")
+                    // req.flash("success_msg", "Product Added");
+            }
+        });
+    }
+};  
   

@@ -81,6 +81,12 @@ router.get("/about", ensureAuthenticated, (req, res) =>
         layout: "layouts/layout"
     })
 );
+router.get("/editprofile", ensureAuthenticated, (req, res) =>
+    res.render("editprofile", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
 
 
 router.get("/mouse", ensureAuthenticated, (req, res) =>
