@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="font-size: 30px; color: #e9e41d;">Red Hat</a>
+    <a class="navbar-brand" href="#" style="font-size: 30px; color:peru ; border-color: peru ;">Red Hat</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -39,10 +39,26 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color: #e9e41d; border-color: yellow;">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color:peru ; border-color: peru ;">Search</button>
       </form>
-      <li class="nav-item">
-        <a href="/users/logout" class="btn btn-outline-success my-2 my-sm-0" style="color: #e9e41d; border-color: yellow;">Logout</a>
+
+      <li class="nav-item dropdown d-flex align-items-end" >
+        <a class="nav-link dropdown-toggle d-flex justify-content-end" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+          <img class="img-account-profile rounded-circle mb-1 w-25 h-25" src="http://bootdey.com/img/Content/avatar/avatar1.png"/>
+
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: 185px;" >
+        <a class="dropdown-item" href="/editprofile">Edit Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/cart">Cart</a>
+          <div class="dropdown-divider"></div>
+          <a href="/users/logout" class="dropdown-item">Logout</a>
+        </div>
       </li>
     </div>
   </nav>
+
+  <style>
+    
+  </style>
