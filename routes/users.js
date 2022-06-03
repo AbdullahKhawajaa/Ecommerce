@@ -62,5 +62,7 @@ router.get("/report/all", userController.allReport);
 
 //Cart
 router.get("/addToCart/:id", userController.cart);
+//Update Profile
+router.post('/profile',upload.single('image'),userController.editprofile);
 
 module.exports = router;

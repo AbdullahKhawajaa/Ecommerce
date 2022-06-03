@@ -82,6 +82,12 @@ router.get("/about", ensureAuthenticated, (req, res) =>
         layout: "layouts/layout"
     })
 );
+router.get("/editprofile", ensureAuthenticated, (req, res) =>
+    res.render("editprofile", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
 
 
 router.get("/mouse/:page", ensureAuthenticated, (req, res) =>{
@@ -166,7 +172,12 @@ router.get("/cart", ensureAuthenticated, (req, res) =>
     })
 );
 
-
+router.get("/adminlogin", ensureAuthenticated, (req, res) =>
+    res.render("adminlogin", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
 
 router.get("/admin", ensureAuthenticated, (req, res) =>
     res.render("adminwelcome", {
@@ -182,12 +193,13 @@ router.get("/listproduct", ensureAuthenticated, (req, res) =>
     })
 );
 
-router.get("/adminPayment", ensureAuthenticated, (req, res) =>
-    res.render("adminPayment", {
+router.get("/viewcharts", ensureAuthenticated, (req, res) =>
+    res.render("viewcharts", {
         user: req.user,
         layout: "layouts/layout"
     })
 );
+
 
 
 
