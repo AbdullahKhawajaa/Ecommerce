@@ -126,6 +126,14 @@ router.get("/adminPayment", ensureAuthenticated, (req, res) =>
     })
 );
 
+router.get("/viewcharts", ensureAuthenticated, (req, res) =>
+    res.render("viewcharts", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
+
+
 
 
 router.get("/adminUpdate", ensureAuthenticated, (req, res) =>
