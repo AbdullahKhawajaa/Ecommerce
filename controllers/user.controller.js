@@ -8,7 +8,8 @@ var nodemailer = require('nodemailer');
 // Load User model
 const User = require("../models/User");
 const product = require("../models/listproduct");
-const profile=require("../models/editprofile");
+const profile = require("../models/editprofile");
+const Review = require("../models/review.model");
 
 //Login Function
 exports.login = (req, res) =>
@@ -270,7 +271,32 @@ exports.listProduct = (req, res) => {
     }
 };
 
-exports.updateProduct = async (req, res) => {
+//review
+exports.adrev = (req, res) =>
+    res.render("reviews", {
+        layout: "layouts/layout"
+    });
+
+
+exports.addReview = (req, res) => {
+    let review = new Review({
+        username: req.body.Username,
+        data: req.body.data,
+        rating: req.body.Rating,
+        // refrence: prod
+    });
+    review.save(function(err) {
+        if (err) {
+            return res
+                .status(400)
+                .json({ err: "Oops something went wrong! Cannont insert Product.." });
+        }
+        req.flash("product_add_success_msg", "New Product add Successfully");
+        //  res.redirect(`/users/reviewsView/${prod}`);
+    });
+};
+
+exports.updateProduct = async(req, res) => {
     const { name, category, description, price, quantity } = req.body;
     var img = fs.readFileSync(req.file.path);
     var encode_img = img.toString('base64');
@@ -278,11 +304,9 @@ exports.updateProduct = async (req, res) => {
         data: new Buffer(encode_img, 'base64'),
         contentType: req.file.mimetype,
     };
-    let result = await product.updateOne(
-    {
-        _id:req.params.id
-    },
-    {
+    let result = await product.updateOne({
+        _id: req.params.id
+    }, {
         name,
         category,
         description,
@@ -290,33 +314,33 @@ exports.updateProduct = async (req, res) => {
         quantity,
         image,
     });
-      if (!result)
+    if (!result)
         return res.status(400).json({
-          err: `Oops something went wrong! Cannont update product with ${req.params.id}.`
+            err: `Oops something went wrong! Cannont update product with ${req.params.id}.`
         });
-      req.flash("product_update_success_msg", "Product updated successfully");
-      res.redirect("/adminManageProduct"); 
+    req.flash("product_update_success_msg", "Product updated successfully");
+    res.redirect("/adminManageProduct");
 };
 
-  exports.update = async function(req, res) {
+exports.update = async function(req, res) {
     let products = await product.findOne({ _id: req.params.id });
     res.render("adminUpdate", {
-      products,
-      layout: "layouts/studentLayout"
+        products,
+        layout: "layouts/studentLayout"
     });
-  };
+};
 
-  exports.delete = async (req, res) => {
+exports.delete = async(req, res) => {
     let result = await product.deleteOne({ _id: req.params.id });
     if (!result)
-      return res.status(400).json({
-        err: `Oops something went wrong! Cannont delete product with ${req.params.id}.`
-      });
+        return res.status(400).json({
+            err: `Oops something went wrong! Cannont delete product with ${req.params.id}.`
+        });
     //req.flash("student_del_success_msg", "Student has been deleted successfully");
     res.redirect("/adminManageProduct");
-  };
+};
 //Profile
-  exports.editprofile = (req, res) => {
+exports.editprofile = (req, res) => {
     console.log("Inside edit profile")
     const { fname, lname, address, country, city, email } = req.body;
     var img = fs.readFileSync(req.file.path);
@@ -328,7 +352,13 @@ exports.updateProduct = async (req, res) => {
     let errors = [];
     if (errors.length > 0) {
         res.render("dasboard", {
-            fname, lname, address, country, city, email,image
+            fname,
+            lname,
+            address,
+            country,
+            city,
+            email,
+            image
         });
     } else {
         profile.findOne({ email: email }).then(user => {
@@ -336,11 +366,23 @@ exports.updateProduct = async (req, res) => {
             if (user) {
                 errors.push({ msg: "Profile already exists !" });
                 res.render("dashboard", {
-                    fname, lname, address, country, city, email,image
+                    fname,
+                    lname,
+                    address,
+                    country,
+                    city,
+                    email,
+                    image
                 });
             } else {
                 const newProfile = new profile({
-                    fname, lname, address, country, city, email,image
+                    fname,
+                    lname,
+                    address,
+                    country,
+                    city,
+                    email,
+                    image
                 });
                 newProfile.save()
                     .then((result) => {
@@ -358,5 +400,4 @@ exports.updateProduct = async (req, res) => {
             }
         });
     }
-};  
-  
+};

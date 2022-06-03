@@ -9,6 +9,9 @@ const userController = require('../controllers/user.controller')
 const adminController = require('../controllers/admin.controller')
 const { forwardAuthenticated } = require('../config/auth');
 
+//const rating_controller = require("../controllers/rating.controller");
+//const review_controller = require("../controllers/rating.controller");
+
 //storing multer
 const storage = multer.diskStorage({
         destination: function(request, file, callback) {
@@ -56,7 +59,14 @@ router.get("/update/:id", userController.update);
 router.post("/updates/:id", upload.single('image'), userController.updateProduct);
 router.get("/delete/:id", userController.delete);
 
-//Update Profile
-router.post('/profile',upload.single('image'),userController.editprofile);
+router.get('/reviews', forwardAuthenticated, userController.adrev);
+router.post('/reviews', userController.addReview)
 
+//Update Profile
+router.post('/profile', upload.single('image'), userController.editprofile);
+
+// Add Reviews
+//router.get('/reviewsView', review_controller.all, (req, res) => res.render('reviews', { user: req.user }));
+//router.get('/reviewsView/:id', review_controller.all, (req, res) => res.render('reviews', { user: req.user }));
+//router.post('/reviews', review_controller.addReview, review_controller.all);
 module.exports = router;

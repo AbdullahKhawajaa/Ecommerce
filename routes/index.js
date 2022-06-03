@@ -11,54 +11,54 @@ router.get("/", forwardAuthenticated, (req, res) =>
 
 // Dashboard
 
-router.get("/dashboard/:page", ensureAuthenticated, async (req, res, next) => {
+router.get("/dashboard/:page", ensureAuthenticated, async(req, res, next) => {
     var perPage = 3;
     var page = req.params.page || 1;
 
     product.find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, image) {
-        product.count().exec(function(err, count){
-        if (err) {
-            console.log(err);
-            res.status(500).send('An error occurred', err);
-        } else {
-            res.render("dashboard", {
-                user: req.user,
-                layout: "layouts/layout",
-                data: image,
-                current: page,
-                pages: Math.ceil(count / perPage) 
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err, image) {
+            product.count().exec(function(err, count) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('An error occurred', err);
+                } else {
+                    res.render("dashboard", {
+                        user: req.user,
+                        layout: "layouts/layout",
+                        data: image,
+                        current: page,
+                        pages: Math.ceil(count / perPage)
+                    })
+                }
             })
-        }
-       })
-    });
+        });
 
 });
 
-router.get("/adminManageProduct/:page", ensureAuthenticated, (req, res) =>{
+router.get("/adminManageProduct/:page", ensureAuthenticated, (req, res) => {
     var perPage = 5;
     var page = req.params.page || 1;
     product.find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, products) {
-        product.count().exec(function(err, count){
-        if (err) {
-            console.log(err);
-            res.status(500).send('An error occurred', err);
-        } else {
-            res.render("adminManageProduct", {
-                user: req.user,
-                layout: "layouts/layout",
-                data: products,
-                current: page,
-                pages: Math.ceil(count / perPage) 
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err, products) {
+            product.count().exec(function(err, count) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('An error occurred', err);
+                } else {
+                    res.render("adminManageProduct", {
+                        user: req.user,
+                        layout: "layouts/layout",
+                        data: products,
+                        current: page,
+                        pages: Math.ceil(count / perPage)
+                    })
+                }
             })
-        }
-       })
-    });
+        });
 });
 
 router.get("/products", ensureAuthenticated, (req, res) =>
@@ -136,6 +136,13 @@ router.get("/viewcharts", ensureAuthenticated, (req, res) =>
 
 router.get("/adminUpdate", ensureAuthenticated, (req, res) =>
     res.render("adminUpdate", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
+
+router.get("/reviews", ensureAuthenticated, (req, res) =>
+    res.render("reviews", {
         user: req.user,
         layout: "layouts/layout"
     })
