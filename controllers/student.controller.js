@@ -1,5 +1,5 @@
 const Student = require("../models/student.model");
-const pdf = require("html-pdf");
+//const pdf = require("html-pdf");
 const fs = require("fs");
 const options = { format: "A4" };
 

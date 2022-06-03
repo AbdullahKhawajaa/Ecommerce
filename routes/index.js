@@ -9,6 +9,7 @@ router.get("/", forwardAuthenticated, (req, res) =>
     res.render("welcome", { layout: "layouts/layout" })
 );
 
+
 // Dashboard
 
 router.get("/dashboard/:page", ensureAuthenticated, async(req, res, next) => {
@@ -89,12 +90,80 @@ router.get("/editprofile", ensureAuthenticated, (req, res) =>
 );
 
 
-router.get("/mouse", ensureAuthenticated, (req, res) =>
-    res.render("mouse", {
-        user: req.user,
-        layout: "layouts/layout"
-    })
-);
+router.get("/mouse/:page", ensureAuthenticated, (req, res) =>{
+    var perPage = 3;
+    var page = req.params.page || 1;
+
+    product.find({category: "Mouse"})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, mouse) {
+        product.count().exec(function(err, count){
+        if (err) {
+            console.log(err);
+            res.status(500).send('An error occurred', err);
+        } else {
+            res.render("mouse", {
+                user: req.user,
+                layout: "layouts/layout",
+                data: mouse,
+                current: page,
+                pages: Math.ceil(count / perPage) 
+            })
+        }
+       })
+    });
+});
+
+router.get("/keyboard/:page", ensureAuthenticated, (req, res) =>{
+    var perPage = 3;
+    var page = req.params.page || 1;
+
+    product.find({category: "Keyboard"})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, mouse) {
+        product.count().exec(function(err, count){
+        if (err) {
+            console.log(err);
+            res.status(500).send('An error occurred', err);
+        } else {
+            res.render("keyboard", {
+                user: req.user,
+                layout: "layouts/layout",
+                data: mouse,
+                current: page,
+                pages: Math.ceil(count / perPage) 
+            })
+        }
+       })
+    });
+});
+
+router.get("/headphones/:page", ensureAuthenticated, (req, res) =>{
+    var perPage = 3;
+    var page = req.params.page || 1;
+
+    product.find({category: "Headphone"})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function(err, mouse) {
+        product.count().exec(function(err, count){
+        if (err) {
+            console.log(err);
+            res.status(500).send('An error occurred', err);
+        } else {
+            res.render("headphones", {
+                user: req.user,
+                layout: "layouts/layout",
+                data: mouse,
+                current: page,
+                pages: Math.ceil(count / perPage) 
+            })
+        }
+       })
+    });
+});
 
 router.get("/cart", ensureAuthenticated, (req, res) =>
     res.render("cart", {

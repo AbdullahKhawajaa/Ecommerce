@@ -61,6 +61,14 @@ router.get("/delete/:id", userController.delete);
 
 router.get('/reviews', forwardAuthenticated, userController.adrev);
 router.post('/reviews', userController.addReview)
+    //Create Reports
+
+router.get("/report/all", userController.allReport);
+
+//Cart
+router.get("/addToCart/:id", userController.cart);
+//Update Profile
+router.post('/profile', upload.single('image'), userController.editprofile);
 
 //Update Profile
 router.post('/profile', upload.single('image'), userController.editprofile);
