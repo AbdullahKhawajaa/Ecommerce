@@ -103,7 +103,12 @@ router.get("/cart", ensureAuthenticated, (req, res) =>
     })
 );
 
-
+router.get("/adminlogin", ensureAuthenticated, (req, res) =>
+    res.render("adminlogin", {
+        user: req.user,
+        layout: "layouts/layout"
+    })
+);
 
 router.get("/admin", ensureAuthenticated, (req, res) =>
     res.render("adminwelcome", {
@@ -114,13 +119,6 @@ router.get("/admin", ensureAuthenticated, (req, res) =>
 
 router.get("/listproduct", ensureAuthenticated, (req, res) =>
     res.render("adminAddProduct", {
-        user: req.user,
-        layout: "layouts/layout"
-    })
-);
-
-router.get("/adminPayment", ensureAuthenticated, (req, res) =>
-    res.render("adminPayment", {
         user: req.user,
         layout: "layouts/layout"
     })

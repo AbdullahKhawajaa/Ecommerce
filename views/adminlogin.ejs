@@ -1,0 +1,23 @@
+<body style="background-color: white;background-image: url(https://t3.ftcdn.net/jpg/03/23/88/08/360_F_323880864_TPsH5ropjEBo1ViILJmcFHJqsBzorxUB.jpg);">
+    <div class="row mt-5">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body">
+                <img src="https://stories.freepiklabs.com/storage/27992/admin-cuate-4435.png" width="55%" style="float: none; margin-left: 25%;">
+                <h1 class="text-center mb-2" style="color: yellow; font-size: 50px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> Admin Login</h1><br>
+                <% include ./partials/messages %>
+                    <form action="/users/login" method="POST">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</body>
