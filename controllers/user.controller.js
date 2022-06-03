@@ -346,4 +346,39 @@ exports.updateProduct = async (req, res) => {
     });
   };
 
+  //Cart
+
+  exports.cart = async (req, res) => {
+      console.log(req.params.id)
+    let result = await product.find({ _id: req.params.id });
+    if (!result)
+      return res.status(400).json({
+        err: `Oops something went wrong ${req.params.id}.`
+    });
+    else{
+        console.log(result)
+        res.render("cart", {
+            layout: 'layouts/layout',
+            data : result
+        });     
+    }
+
+
+
+
+
+    //   product.find({name : req.params.name})
+    //   .then(function(err, item){
+    //     if(err){
+
+    //     }else{
+    //         res.render("cart", {
+    //         layout: 'layouts/layout',
+    //         data:item
+    //         });           
+    //     }
+    //   }
+    //   );
+  }
+
   

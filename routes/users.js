@@ -60,4 +60,7 @@ router.get("/delete/:id", userController.delete);
 
 router.get("/report/all", userController.allReport);
 
+//Cart
+router.get("/addToCart/:id", userController.cart);
+
 module.exports = router;

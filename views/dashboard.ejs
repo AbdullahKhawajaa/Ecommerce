@@ -65,7 +65,11 @@
                 <h3><%- product.name %></h3>
                 <p><%- product.description %> </p>
                 <p style="color:green;"><%- product.price %> Rs </p>
-                <button>Add to Cart</button>
+                <form action="/users/addToCart/<%=product._id%>">
+                  <button type="submit" >
+                    Add to Cart
+                  </button>
+              </form>
               </div>
           </div>
         <% }) %>
@@ -107,8 +111,6 @@
   <% } %>
 </div>
 
-
-<br><br>
 
 <% include ./partials/footer %>
 

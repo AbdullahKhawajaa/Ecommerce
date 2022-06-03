@@ -6,14 +6,14 @@
            <div class="row">
               <div class="col-md-6">
                  <div class="titlepage">
-                    <p>Every Mouse</p>
+                    <p>Every Headphone</p>
                     <h2>Up to 40% off !</h2>
-                    <a class="read_more" href="#">Shop Now</a>
+                    <a class="read_more" href="/dashboard/1">Shop Now</a>
                  </div>
               </div>
               <div class="col-md-6">
                  <div class="laptop_box">
-                    <figure><img src="https://www.androidauthority.com/wp-content/uploads/2022/01/Corsair-M65-RGB-Ultra-Wireless-Gaming-Mouse-Promo-Image.jpg" alt="#" style="width: 100%; height:100%;"/></figure>
+                    <figure><img src="https://images.unsplash.com/photo-1581432079854-2f6d5678b478?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2FtaW5nJTIwaGVhZHBob25lc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="#" style="width: 100%; height:100%;"/></figure>
                  </div>
               </div>
            </div>
@@ -27,7 +27,7 @@
        <div class="container">
           <div class="row">
            <% data.forEach(function(product) { %>
-               <% if (product.category === "Mouse" || product.category === "mouse" ) { %>
+               <% if (product.category === "keyboard" || product.category === "Keyboard" ) { %>
              <div class="col-md-4">
                 <div class="box_text">            
                    <i><img src="data:image/<%= product.image.contentType%>;base64,<%= product.image.data.toString('base64')%>"
